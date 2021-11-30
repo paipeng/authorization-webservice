@@ -1,0 +1,73 @@
+import java.time.LocalDateTime
+
+plugins {
+    id 'org.springframework.boot' version '2.6.1'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+def applicationName = 'Authorization Restful API'
+
+group 'com.paipeng.authorization'
+version '1.0-SNAPSHOT'
+
+
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    implementation(group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3')
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'mysql:mysql-connector-java'
+
+    // https://mvnrepository.com/artifact/com.auth0/java-jwt
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2',
+            // Uncomment the next line if you want to use RSASSA-PSS (PS256, PS384, PS512) algorithms:
+            //'org.bouncycastle:bcprov-jdk15on:1.60',
+            'io.jsonwebtoken:jjwt-jackson:0.11.2' // or 'io.jsonwebtoken:jjwt-gson:0.11.2' for gson
+
+
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+
+    // https://mvnrepository.com/artifact/com.javax0.license3j/license3j
+    implementation group: 'com.javax0.license3j', name: 'license3j', version: '3.1.6'
+
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+
+task updateVersion {
+    doLast {
+        ant.propertyfile(file: 'src/main/resources/version.properties') {
+            entry( key: "app.create_date", value: LocalDateTime.now())
+            entry( key: "app.version", value: version)
+            entry( key: "app.name", value: applicationName)
+        }
+    }
+}
+
+tasks.compileJava {
+    dependsOn(updateVersion)
+}
+
+
+test {
+    useJUnitPlatform()
+}
+
+
