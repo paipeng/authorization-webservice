@@ -10,7 +10,9 @@ import com.paipeng.authorization.util.ImageUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AuthorizationService extends BaseService{
     private final static Logger logger = LogManager.getLogger(ProductService.class.getSimpleName());
     @Autowired
