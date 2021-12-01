@@ -1,12 +1,14 @@
 package com.paipeng.authorization.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
 
 import javax.persistence.*;
+
 @Entity
 @Table(name = "authorizations")
-public class Authorization extends BaseEntity{
+public class Authorization extends BaseEntity {
 
     @Column(name = "activate", columnDefinition = "bit default 0 ", nullable = false)
     private boolean activate;
@@ -46,6 +48,7 @@ public class Authorization extends BaseEntity{
         this.product = product;
     }
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public String getImageBase64() {
         return imageBase64;
     }
