@@ -1,6 +1,7 @@
 package com.paipeng.authorization.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -15,6 +16,7 @@ public class User extends BaseEntity {
     private String email;
 
     @Column(nullable = false, length = 64)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column(name = "first_name", nullable = false, length = 20)
@@ -25,6 +27,7 @@ public class User extends BaseEntity {
 
 
     @Column(name = "token", length = 512)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String token;
 
 
