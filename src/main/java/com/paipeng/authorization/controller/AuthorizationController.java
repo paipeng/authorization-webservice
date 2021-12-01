@@ -29,7 +29,7 @@ public class AuthorizationController {
     }
 
 
-    @GetMapping(value = "/product/{id}", produces = {"application/json;charset=UTF-8"})
+    @GetMapping(value = "/products/{id}", produces = {"application/json;charset=UTF-8"})
     public List<Authorization> getAll(@NotNull @PathVariable("id") Long id, HttpServletResponse httpServletResponse) throws Exception {
         logger.info("getAllByProductId: " + id);
         return authorizationService.getAllByProductId(id);

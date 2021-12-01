@@ -27,6 +27,9 @@ public class AuthorizationService extends BaseService{
     @Autowired
     private ApplicationConfig applicationConfig;
 
+    @Autowired
+    private ImageService imageService;
+
     public Authorization save(Authorization authorization) throws Exception {
         User currentUser = getUserFromSecurity();
         if (currentUser == null) {
@@ -36,9 +39,7 @@ public class AuthorizationService extends BaseService{
         if (productRepository.findById(authorization.getProduct().getId()).orElse(null) == null) {
             throw new Exception("404");
         }
-        String savePath = CommonUtil.getProjHomePath() + "/authorizations/" + CommonUtil.getSystemTime("yyyyMM");
-
-        String filePath = ImageUtil.saveBase64ImageToLocal(authorization.getImageBase64(), savePath);
+        String filePath = imageService.saveImage(authorization.getImageBase64());
         authorization.setFilePath(filePath);
         authorization = authorizationRepository.saveAndFlush(authorization);
         return authorization;
