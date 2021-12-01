@@ -10,14 +10,6 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 @Configuration
 @ConfigurationProperties()
 public class ApplicationConfig {
-    @Value("${license.private.key.file}")
-    private String licensePrivateKeyFile;
-
-    @Value("${license.public.key.file}")
-    private String licensePublicKeyFile;
-
-    @Value("${license.output.filepath}")
-    private String licenseOutputFilepath;
     @Value("${security.jwt.secret}")
     private String securityJwtSecret;
 
@@ -29,18 +21,6 @@ public class ApplicationConfig {
         source.setUseCodeAsDefaultMessage(true);
 
         return source;
-    }
-
-    public String getLicensePrivateKeyFile() {
-        return licensePrivateKeyFile;
-    }
-
-    public String getLicensePublicKeyFile() {
-        return licensePublicKeyFile;
-    }
-
-    public String getLicenseOutputFilepath() {
-        return licenseOutputFilepath;
     }
 
     public String getSecurityJwtSecret() {
