@@ -14,6 +14,9 @@ public class Authorization extends BaseEntity{
     @Column(name = "file_path", nullable = true, length = 128)
     private String filePath;
 
+    @Transient
+    private String imageBase64;
+
     @ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     @LazyToOne(value = LazyToOneOption.FALSE)
@@ -41,5 +44,13 @@ public class Authorization extends BaseEntity{
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public String getImageBase64() {
+        return imageBase64;
+    }
+
+    public void setImageBase64(String imageBase64) {
+        this.imageBase64 = imageBase64;
     }
 }
