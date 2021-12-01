@@ -2,6 +2,7 @@ package com.paipeng.authorization.security;
 
 import com.paipeng.authorization.config.ApplicationConfig;
 import com.paipeng.authorization.entity.User;
+import com.paipeng.authorization.repository.UserRepository;
 import com.paipeng.authorization.util.UserUtil;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
@@ -30,8 +31,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     @Autowired
     private ApplicationConfig applicationConfig;
 
-    //@Autowired
-    //private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException {
@@ -43,8 +44,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
                 String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
                 logger.info("jwtToken: " + jwtToken);
 
-                //User user = userRepository.findByToken(jwtToken);
-                User user = UserUtil.getUser(applicationConfig.getSecurityJwtSecret());
+                User user = userRepository.findByToken(jwtToken);
 
                 Claims claims = validateToken(jwtToken, user);
                 if (claims != null && claims.get("authorities") != null) {
