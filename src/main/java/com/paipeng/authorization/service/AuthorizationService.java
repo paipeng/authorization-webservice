@@ -2,6 +2,7 @@ package com.paipeng.authorization.service;
 
 import com.paipeng.authorization.config.ApplicationConfig;
 import com.paipeng.authorization.entity.Authorization;
+import com.paipeng.authorization.entity.Product;
 import com.paipeng.authorization.entity.User;
 import com.paipeng.authorization.repository.AuthorizationRepository;
 import com.paipeng.authorization.repository.ProductRepository;
@@ -11,6 +12,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AuthorizationService extends BaseService{
@@ -39,5 +42,13 @@ public class AuthorizationService extends BaseService{
         authorization.setFilePath(filePath);
         authorization = authorizationRepository.saveAndFlush(authorization);
         return authorization;
+    }
+
+    public List<Authorization> getAllByProductId(Long id) throws Exception {
+        Product product = productRepository.findById(id).orElse(null);
+        if (product == null) {
+            throw new Exception("404");
+        }
+        return authorizationRepository.findAllByProduct(product);
     }
 }
