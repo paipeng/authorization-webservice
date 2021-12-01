@@ -13,6 +13,12 @@ import java.util.List;
 @Table(name = "products")
 public class Product extends BaseEntity {
 
+    @Column(nullable = false, length = 256)
+    private String name;
+
+    @Column(nullable = true, length = 256)
+    private String url;
+
     @Column(nullable = false, length = 256, unique = true)
     private String barcode;
 
@@ -29,6 +35,22 @@ public class Product extends BaseEntity {
     @OneToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "product")
     @LazyCollection(value = LazyCollectionOption.EXTRA)
     private List<Authorization> authorizations;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getBarcode() {
         return barcode;
